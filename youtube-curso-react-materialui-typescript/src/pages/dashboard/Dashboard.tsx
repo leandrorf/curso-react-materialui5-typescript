@@ -9,7 +9,9 @@ export const Dashboard = () => {
             barraDeFerramentas={(
                 <FerramentasDeDetalhe
                     mostrarBotaoSalvarEFechar
-                    mostrarBotaoSalvarEVoltarCarregando
+                    mostrarBotaoNovo
+                    mostrarBotaoSalvarEFecharCarregando
+                    mostrarBotaoVoltar={false}
                 />
             )}
         >
