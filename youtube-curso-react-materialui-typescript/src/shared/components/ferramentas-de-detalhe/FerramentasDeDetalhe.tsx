@@ -98,7 +98,7 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
                         variant="button"
                         sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
                     >
-                        Salvar e Voltar
+                        Salvar e fechar
                     </Typography>
                 </Button>
             )}
