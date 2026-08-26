@@ -4,7 +4,8 @@ import { LayoutBaseDePagina } from "../../shared/layouts";
 import { useEffect, useMemo, useState } from "react";
 import { IListagemPessoa, PessoasService } from "../../shared/services/api/pessoas/PessoasService";
 import { useDebounce } from "../../shared/hooks";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@mui/material";
+import { Environment } from "../../shared/environment";
 
 export const ListagemDePessoas: React.FC = () => {
 
@@ -36,9 +37,9 @@ export const ListagemDePessoas: React.FC = () => {
                         setPessoas(result.data);
                         setTotalCount(result.totalCount);
                     }
-            });
+                });
         });
-        
+
     }, [busca]);
 
     return (
@@ -57,7 +58,7 @@ export const ListagemDePessoas: React.FC = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell width={100}>Ações</TableCell>
+                            <TableCell>Ações</TableCell>
                             <TableCell>Nome Completo</TableCell>
                             <TableCell>Email</TableCell>
                         </TableRow>
@@ -73,6 +74,22 @@ export const ListagemDePessoas: React.FC = () => {
                         ))}
 
                     </TableBody>
+
+                    {totalCount === 0 && !isLoading && (
+                        <caption>{Environment.LISTAGEM_VAZIA}</caption>
+                    )}
+
+                    <TableFooter>
+
+                        {isLoading && (
+                            <TableRow>
+                                <TableCell colSpan={3} sx={{ position: 'relative' }}>
+                                    <LinearProgress variant="indeterminate" />
+                                </TableCell>
+                            </TableRow>
+                        )}
+
+                    </TableFooter>
                 </Table>
             </TableContainer>
         </LayoutBaseDePagina>
