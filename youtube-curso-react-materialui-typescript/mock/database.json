@@ -5,6 +5,12 @@
             "cidadeId": 1,
             "email": "juca@gmail.com",
             "nomeCompleto": "juca"
+        },
+        {
+            "id": 2,
+            "cidadeId": 1,
+            "email": "maria@gmail.com",
+            "nomeCompleto": "Maria"
         }
     ]
 }
