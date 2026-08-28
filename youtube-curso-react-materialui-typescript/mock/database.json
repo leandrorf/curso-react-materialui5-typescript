@@ -7,24 +7,6 @@
       "nomeCompleto": "juca"
     },
     {
-      "id": 3,
-      "cidadeId": 3,
-      "email": "carlos.souza@gmail.com",
-      "nomeCompleto": "Carlos Souza"
-    },
-    {
-      "id": 4,
-      "cidadeId": 2,
-      "email": "ana.oliveira@gmail.com",
-      "nomeCompleto": "Ana Oliveira"
-    },
-    {
-      "id": 7,
-      "cidadeId": 1,
-      "email": "lucas.pereira@gmail.com",
-      "nomeCompleto": "Lucas Pereira"
-    },
-    {
       "id": 8,
       "cidadeId": 2,
       "email": "juliana.costa@gmail.com",

@@ -1,6 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { FerramentasDeDetalhe } from "../../shared/components";
+import { useEffect, useState } from "react";
+import { PessoasService } from "../../shared/services/api/pessoas/PessoasService";
+import { LinearProgress } from "@mui/material";
 
 
 export const DetalheDePessoas: React.FC = () => {
@@ -8,12 +11,44 @@ export const DetalheDePessoas: React.FC = () => {
     const { id = 'nova' } = useParams<'id'>();
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [nome, setNome] = useState('');
+    
+    useEffect(() => {
+        if (id !== 'nova') {
+            setIsLoading(true);
+
+            PessoasService.getById(Number(id))
+                .then((result) => {
+                    setIsLoading(false);
+
+                    if (result instanceof Error) {
+                        alert(result.message);
+                        navigate('/pessoas');
+                    } else {
+                        setNome(result.nomeCompleto);
+                        console.log(result);
+                    }
+                });
+        }
+    }, [id]);
+
     const handleSave = () => {
         // Implement save logic here
     }
 
-    const handleDelete = () => {
-        // Implement delete logic here
+    const handleDelete = (id: number) => {
+        if (window.confirm('Realmente deseja apagar?')) {
+            PessoasService.deleteById(id)
+                .then(result => {
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    } else {
+                        alert('Registro apagado com sucesso!');
+                        navigate('/pessoas');
+                    }
+                });
+        }
     }
 
     const handleSaveAndClose = () => {
@@ -23,7 +58,7 @@ export const DetalheDePessoas: React.FC = () => {
     return (
         <>
             <LayoutBaseDePagina 
-                titulo='Detalhe da Pessoa'
+                titulo={id !== 'nova' ? nome : 'Nova Pessoa'}
                 barraDeFerramentas={
                     <FerramentasDeDetalhe
                         textoBotaoNovo='Nova'
@@ -32,12 +67,17 @@ export const DetalheDePessoas: React.FC = () => {
                         mostrarBotaoApagar={id !== 'nova'}
                         aoClicarEmSalvar={() => handleSave()}
                         aoClicarEmSalvarEFechar={() => handleSaveAndClose()}
-                        aoClicarEmApagar={() => handleDelete()}
+                        aoClicarEmApagar={() => handleDelete(Number(id))}
                         aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
                         aoClicarEmVoltar={() => navigate('/pessoas')}
                     />
                 }
             />
+
+                {isLoading && (
+                    <LinearProgress variant="indeterminate" /> 
+                )}
+
             <p>Detalhe da Pessoa {id}</p>
         </>
     );
